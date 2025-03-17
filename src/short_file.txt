@@ -1,0 +1,14 @@
+cat
+bat
+rat
+rate
+apple
+bait
+bit
+banana
+bot
+dog
+zebra
+win
+dot
+cog
