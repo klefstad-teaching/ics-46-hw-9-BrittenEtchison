@@ -27,7 +27,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     }
     return distances;
 }
-vector<int> extract_shortest_path(const vector<int>& previous, int destination) {
+vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination) {
     vector<int> shortest_path;
     int curr_vertex = destination;
     while (curr_vertex != UNDEFINED) {
@@ -36,8 +36,8 @@ vector<int> extract_shortest_path(const vector<int>& previous, int destination) 
     }
     reverse(shortest_path.begin(), shortest_path.end());
     return shortest_path;
-
 }
+
 void print_path(const vector<int>& v, int total) {
     if (total == INF)
         cout << "No path found. \n";

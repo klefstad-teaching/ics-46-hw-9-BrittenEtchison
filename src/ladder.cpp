@@ -12,35 +12,38 @@ void error(string msg, string word1, string word2) {
 }
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     if (str1 == str2)
-        return false;
-
+        return true;
     int size1 = str1.size(), size2 = str2.size();
     if (abs(size1 - size2) > d)
         return false; 
 
-    if (abs(size1 - size2) == d) {
-        string longer_word = size1 > size2 ? str1 : str2;
-        string shorter_word = size1 < size2 ? str1 : str2;
-        for (int i = 0; i < longer_word.size(); ++i) {
-            string shortened_word = longer_word;
-            shortened_word.erase(i, 1);
-            if (shortened_word == shorter_word)
-                return true;
-        }
-    }
-    else if (size1 == size2)
-        return is_adjacent(str1, str2);
-
-    return false;
+    return is_adjacent(str1, str2);
 }
+
 bool is_adjacent(const string& word1, const string& word2) {
-    int word_size = word1.size();
-    int diff_count = 0;
-    for (int i = 0; i < word_size; ++i) {
-        if (word1[i] != word2[i])
-            ++diff_count;
+    int size1 = word1.size(), size2 = word2.size();
+    
+    if (abs(size1 - size2) > 1)
+        return false;
+
+    if (size1 == size2) {
+        int diff_count = 0;
+        for (int i = 0; i < size1; ++i) {
+            if (word1[i] != word2[i])
+                ++diff_count;
+        }
+        return diff_count == 1;
     }
-    return diff_count == 1;
+    
+    string longer_word = size1 > size2 ? word1 : word2;
+    string shorter_word = size1 < size2 ? word1 : word2;
+    for (int i = 0; i < longer_word.size(); ++i) {
+        string shortened_word = longer_word;
+        shortened_word.erase(i, 1);
+        if (shortened_word == shorter_word)
+            return true;
+    }
+    return false;
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
@@ -86,14 +89,12 @@ void load_words(set<string> & word_list, const string& file_name) {
 
 void print_word_ladder(const vector<string>& ladder) {
     if (ladder.empty()) {
-        cout << "No ladder found for the two words." << endl;
+        cout << "No word ladder found." << endl;
         return;
     }
+    cout << "Word ladder found: ";
     for (int i = 0; i < ladder.size(); ++i) {
         cout << ladder[i];
-        if (i < ladder.size() - 1) {
-            cout << " -> ";
-        }
     }
     cout << endl;
 }
